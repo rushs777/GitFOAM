@@ -1,0 +1,125 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v3.0+                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+//Author: Simon Rush
+//Date: 04/29/16
+FoamFile
+{
+    version     3.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 1;
+
+vertices #codeStream
+{
+    codeInclude
+    #{
+        #include "pointField.H"
+    #};
+
+    code
+    #{
+        pointField points(9);
+        points[0]  = point(0.5, -0.5, -0.5);
+        points[1]  = point(-0.5, -0.5, -0.5);
+        points[2]  = point(0.5, 0.5, -0.5);
+        points[3]  = point(-0.5, 0.5, -0.5);
+	points[4]  = point(-0.5, 0, -0.5);
+	points[5]  = point(0, 0, -0.5);
+	points[6]  = point(0.5, 0, -0.5);
+	points[7]  = point(0, 0.5, -0.5);
+	points[8]  = point(0, -0.5, -0.5);
+
+
+        // Duplicate z points
+        label sz = points.size();
+        points.setSize(2*sz);
+        for (label i = 0; i < sz; i++)
+        {
+            const point& pt = points[i];
+            points[i+sz] = point(pt.x(), pt.y(), -pt.z());
+        }
+
+        os  << points;
+    #};
+};
+
+// To see the blocks, edges, and vertices, type paraFoam -block &
+blocks
+(
+    hex (1 8 5 4 10 17 14 13) (10 10 1) simpleGrading (1 1 1) //block 0
+    hex (8 0 6 5 17 9 15 14) (10 10 1) simpleGrading (1 1 1) //block 1
+    hex (5 6 2 7 14 15 11 16) (10 10 1) simpleGrading (1 1 1) //block 2
+    hex (4 5 7 3 13 14 16 12) (10 10 1) simpleGrading (1 1 1) //block 3
+);
+
+
+edges
+(
+);
+
+boundary
+(
+    down
+    {
+        type patch;
+        faces
+        (
+            (1 8 17 10)
+            (8 0 9 17)
+        );
+    }
+    right
+    {
+        type patch;
+        faces
+        (
+            (0 6 15 9)
+            (6 2 11 15)
+        );
+    }
+    movingTop
+    {
+        type wall;
+        faces
+        (
+            (2 7 16 11)
+            (7 3 12 16)
+        );
+    }
+/*
+    up
+    {
+        type symmetryPlane;
+        faces
+        (
+            (2 7 16 11)
+            (7 3 12 16)
+        );
+    }
+*/
+    left
+    {
+        type patch;
+        faces
+        (
+            (1 10 13 4)
+            (3 4 13 12)
+        );
+    }
+);
+
+mergePatchPairs
+(
+);
+
+// ************************************************************************* //

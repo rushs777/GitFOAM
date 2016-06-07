@@ -1,0 +1,232 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v3.0+                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+//Author: Simon Rush
+//Date: 04/29/16
+FoamFile
+{
+    version     3.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 1;
+
+vertices #codeStream
+{
+    codeInclude
+    #{
+        #include "pointField.H"
+    #};
+
+    code
+    #{
+        pointField points(32);
+	// Southwest points
+	points[0]  = point(-1.0, -1.0, -1.0);
+	points[1]  = point(-0.25, -1.0, -1.0);
+	points[2]  = point(0.0, -1.0, -1.0);
+	points[3]  = point(0.0, -0.5, -1.0);
+	points[4]  = point(0.0, -0.25, -1.0);
+	points[5]  = point(-0.125, -0.2165064, -1.0);
+	points[6]  = point(-0.25, 0.0, -1.0);
+	points[7]  = point(-0.5, 0.0, -1.0);
+	points[8]  = point(-1.0, 0.0, -1.0);
+	points[9]  = point(-1.0, -0.4330127, -1.0);
+	points[10] = point(-0.25, -0.4330127, -1.0);
+	// Southeast points
+	points[11] = point(0.25, -1.0, -1.0);
+	points[12] = point(1.0, -1.0, -1.0);
+	points[13] = point(1.0, -0.4330127, -1.0);
+	points[14] = point(1.0, 0.0, -1.0);
+	points[15] = point(0.5, 0.0, -1.0);
+	points[16] = point(0.25, 0.0, -1.0);
+	points[17] = point(0.125, -0.2165064, -1.0);
+	points[18] = point(0.25, -0.4330127, -1.0);
+	// Northeast points
+	points[19] = point(1.0, 0.4330127, -1.0);
+	points[20] = point(1.0, 1.0, -1.0);
+	points[21] = point(0.25, 1.0, -1.0);
+	points[22] = point(0.0, 1.0, -1.0);
+	points[23] = point(0.0, 0.5, -1.0);
+	points[24] = point(0.0, 0.25, -1.0);
+	points[25] = point(0.125, 0.2165064, -1.0);
+	points[26] = point(0.25, 0.4330127, -1.0);
+	// Northwest points
+	points[27] = point(-0.25, 1.0, -1.0);
+	points[28] = point(-1.0, 1.0, -1.0);
+	points[29] = point(-1.0, 0.4330127, -1.0);
+	points[30] = point(-0.125, 0.2165064, -1.0);
+	points[31] = point(-0.25, 0.4330127, -1.0);
+
+
+/*
+        points[0]  = point(0.5, -0.5, -0.5);
+        points[1]  = point(-0.5, -0.5, -0.5);
+        points[2]  = point(0.5, 0.5, -0.5);
+        points[3]  = point(-0.5, 0.5, -0.5);
+	points[4]  = point(-0.5, 0, -0.5);
+	points[5]  = point(0.5, 0, -0.5);
+	points[6]  = point(0, 0.5, -0.5);
+	points[7]  = point(0, -0.5, -0.5);
+	// Inner Cylinder
+	points[8]  = point(0, -0.1, -0.5); //South
+	points[9]  = point(-0.1, 0, -0.5); // West
+	points[10] = point(0, 0.1, -0.5); // North
+	points[11] = point[0.1, 0, -0.5); // East
+	// Outer Cylinder
+	points[12]  = point(0, -0.3, -0.5); //South
+	points[13]  = point(-0.3, 0, -0.5); // West
+	points[14] = point(0, 0.3, -0.5); // North
+	points[15] = point[0.3, 0, -0.5); // East
+*/
+
+
+        // Duplicate z points
+        label sz = points.size();
+        points.setSize(2*sz);
+        for (label i = 0; i < sz; i++)
+        {
+            const point& pt = points[i];
+            points[i+sz] = point(pt.x(), pt.y(), -pt.z());
+        }
+
+        os  << points;
+    #};
+};
+
+// To see the blocks, edges, and vertices, type paraFoam -block &
+blocks
+(
+    // Southwest blocks 
+    hex (0 1 10 9 32 33 42 41) (10 10 1) simpleGrading (1 1 1) //block 0
+    hex (1 2 3 10 33 34 35 42) (10 10 1) simpleGrading (1 1 1) // block 1
+    hex (10 3 4 5 42 35 36 37) (10 10 1) simpleGrading (1 1 1) // block 2
+    hex (10 5 6 7 42 37 38 39) (10 10 1) simpleGrading (1 1 1) // block 3
+    hex (9 10 7 8 41 42 39 40) (10 10 1) simpleGrading (1 1 1) //block 4
+
+    // Southeast blocks
+    hex (11 12 13 18 43 44 45 50) (10 10 1) simpleGrading (1 1 1) //block 5
+    hex (18 13 14 15 50 45 46 47) (10 10 1) simpleGrading (1 1 1) //block 6
+    hex (17 18 15 16 49 50 47 48) (10 10 1) simpleGrading (1 1 1) //block 7
+    hex (4 3 18 17 36 35 50 49) (10 10 1) simpleGrading (1 1 1) //block 5
+    hex (2 11 18 3 34 43 50 35) (10 10 1) simpleGrading (1 1 1) //block 5
+
+    // Northeast blocks
+    hex (26 19 20 21 58 51 52 53) (10 10 1) simpleGrading (1 1 1) //block 5
+    hex (23 26 21 22 55 58 53 54) (10 10 1) simpleGrading (1 1 1) //block 5
+    hex (24 25 26 23 56 57 58 55) (10 10 1) simpleGrading (1 1 1) //block 5
+    hex (16 15 26 25 48 47 58 57) (10 10 1) simpleGrading (1 1 1) //block 5
+    hex (15 14 19 26 47 46 51 58) (10 10 1) simpleGrading (1 1 1) //block 5
+
+    // Northwest blocks
+    hex (29 31 27 28 61 63 59 60) (10 10 1) simpleGrading (1 1 1) //block 5
+    hex (8 7 31 29 40 39 63 61) (10 10 1) simpleGrading (1 1 1) //block 5
+    hex (7 6 30 31 39 38 62 63) (10 10 1) simpleGrading (1 1 1) //block 5
+    hex (31 30 24 23 63 62 56 55) (10 10 1) simpleGrading (1 1 1) //block 5
+    hex (31 23 22 27 63 55 54 59) (10 10 1) simpleGrading (1 1 1) //block 5
+
+
+
+);
+
+
+edges
+(
+    arc 6 5 (-0.1875 -0.1653595 -1.0) // sw outer edge 0
+    arc 5 4 (-0.0625 -0.2420615 -1.0)
+    arc 7 10 (-0.375 -0.3307189 -1.0) // sw inner edge 1
+    arc 10 3 (-0.125 -0.4841229 -1.0)
+    arc 4 17 (0.0625 -0.2420615 -1.0) // se outer edge 2
+    arc 17 16 (0.1875 -0.1653595 -1.0)
+    arc 3 18 (0.125 -0.4841229 -1.0) // se inner edge 3
+    arc 18 15 (0.375 -0.3307189 -1.0)
+    arc 16 25 (0.1875 0.1653595 -1.0) // ne outer edge 4
+    arc 25 24 (0.0625 0.2420615 -1.0)
+    arc 15 26 (0.375 0.3307189 -1.0) // ne inner edge 5
+    arc 26 23 (0.125 0.4841229 -1.0)
+    arc 24 30 (-0.0625 0.2420615 -1.0) // nw outer edge 6 
+    arc 30 6  (-0.1875 0.1653595 -1.0)
+    arc 23 31 (-0.125 -0.4841229 -1.0) // nw inner edge 7 
+    arc 31 7 (-0.375 0.3307189 -1.0)
+
+    arc 38 37 (-0.1875 -0.1653595 1.0) // sw outer edge 0
+    arc 37 36 (-0.0625 -0.2420615 1.0)
+    arc 39 42 (-0.375 -0.3307189 1.0) // sw inner edge 1
+    arc 42 45 (-0.125 -0.4841229 1.0)
+    arc 36 49 (0.0625 -0.2420615 1.0) // se outer edge 2
+    arc 49 48 (0.1875 -0.1653595 1.0)
+    arc 35 50 (0.125 -0.4841229 1.0) // se inner edge 3
+    arc 50 47 (0.375 -0.3307189 1.0)
+    arc 48 57 (0.1875 0.1653595 1.0) // ne outer edge 4
+    arc 57 56 (0.0625 0.2420615 1.0)
+    arc 47 58 (0.375 0.3307189 1.0) // ne inner edge 5
+    arc 58 55 (0.125 0.4841229 1.0)
+    arc 56 62 (-0.0625 0.2420615 1.0) // nw outer edge 6 
+    arc 62 38 (-0.1875 0.1653595 1.0)
+    arc 55 63 (-0.125 -0.4841229 1.0) // nw inner edge 7 
+    arc 63 39 (-0.375 0.3307189 1.0)
+);
+
+boundary
+(
+    down
+    {
+        type patch;
+        faces
+        (
+            (0 1 33 32)
+            (1 2 34 33)
+	    (2 11 43 34)
+            (11 12 44 43)
+        );
+    }
+    outlet
+    {
+        type patch;
+        faces
+        (
+            (12 13 45 44)
+            (13 14 46 45)
+            (14 19 51 46)
+            (19 20 52 51)
+        );
+    }
+
+    up
+    {
+        type patch;
+        faces
+        (
+            (20 21 53 52)
+            (21 22 54 53)
+            (22 27 59 54)
+            (27 28 60 59)
+        );
+    }
+
+    inlet
+    {
+        type patch;
+        faces
+        (
+            (28 29 61 60)
+            (29 8 40 61)
+            (8 9 41 40)
+            (9 0 32 41)
+        );
+    }
+);
+
+mergePatchPairs
+(
+);
+
+// ************************************************************************* //

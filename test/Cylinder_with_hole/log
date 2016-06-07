@@ -1,0 +1,98 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v3.0+                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : v3.0+-e941ee6c15e9
+Exec   : blockMesh
+Date   : Apr 29 2016
+Time   : 10:19:38
+Host   : "RushLinuxHome"
+PID    : 6047
+Case   : /home/simon/OpenFOAM/simon-v3.0+/run/test/rotatingCylinder
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Creating block mesh from
+    "/home/simon/OpenFOAM/simon-v3.0+/run/test/rotatingCylinder/system/blockMeshDict"
+Using #codeStream at line 22 in file "/home/simon/OpenFOAM/simon-v3.0+/run/test/rotatingCylinder/system/blockMeshDict"
+Using #codeStream with "/home/simon/OpenFOAM/simon-v3.0+/run/test/rotatingCylinder/dynamicCode/platforms/linux64GccDPInt32Opt/lib/libcodeStream_e6de247514b1d7e32329c4c1ef6088821a4ee544.so"
+Creating new library in "dynamicCode/_e6de247514b1d7e32329c4c1ef6088821a4ee544/platforms/linux64GccDPInt32Opt/lib/libcodeStream_e6de247514b1d7e32329c4c1ef6088821a4ee544.so"
+Invoking "wmake -s libso /home/simon/OpenFOAM/simon-v3.0+/run/test/rotatingCylinder/dynamicCode/_e6de247514b1d7e32329c4c1ef6088821a4ee544"
+wmakeLnInclude: linking include files to ./lnInclude
+Making dependency list for source file codeStreamTemplate.C
+'/home/simon/OpenFOAM/simon-v3.0+/run/test/rotatingCylinder/dynamicCode/_e6de247514b1d7e32329c4c1ef6088821a4ee544/../platforms/linux64GccDPInt32Opt/lib/libcodeStream_e6de247514b1d7e32329c4c1ef6088821a4ee544.so' is up to date.
+Creating curved edges
+Creating topology blocks
+Creating topology patches
+
+Creating block mesh topology
+--> FOAM Warning : 
+    From function Foam::polyMesh::polyMesh(const Foam::IOobject&, const Foam::Xfer<Foam::Field<Foam::Vector<double> > >&, const cellShapeList&, const faceListList&, const wordList&, const Foam::PtrList<Foam::dictionary>&, const Foam::word&, const Foam::word&, bool)
+    in file meshes/polyMesh/polyMeshFromShapeMesh.C at line 872
+    Found 8 undefined faces in mesh; adding to default patch.
+
+Check topology
+
+	Basic statistics
+		Number of internal faces : 4
+		Number of boundary faces : 16
+		Number of defined boundary faces : 16
+		Number of undefined boundary faces : 0
+	Checking patch -> block consistency
+
+Creating block offsets
+Creating merge list .
+
+Creating polyMesh from blockMesh
+Creating patches
+Creating cells
+Creating points with scale 1
+    Block 0 cell size :
+        i : 0.05 .. 0.05
+        j : 0.05 .. 0.05
+        k : 1 .. 1
+
+    Block 1 cell size :
+        i : 0.05 .. 0.05
+        j : 0.05 .. 0.05
+        k : 1 .. 1
+
+    Block 2 cell size :
+        i : 0.05 .. 0.05
+        j : 0.05 .. 0.05
+        k : 1 .. 1
+
+    Block 3 cell size :
+        i : 0.05 .. 0.05
+        j : 0.05 .. 0.05
+        k : 1 .. 1
+
+
+Writing polyMesh
+----------------
+Mesh Information
+----------------
+  boundingBox: (-0.5 -0.5 -0.5) (0.5 0.5 0.5)
+  nPoints: 882
+  nCells: 400
+  nFaces: 1640
+  nInternalFaces: 760
+----------------
+Patches
+----------------
+  patch 0 (start: 760 size: 20) name: down
+  patch 1 (start: 780 size: 20) name: right
+  patch 2 (start: 800 size: 20) name: up
+  patch 3 (start: 820 size: 20) name: left
+  patch 4 (start: 840 size: 800) name: defaultFaces
+
+End
+
