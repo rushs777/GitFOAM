@@ -1,0 +1,3 @@
+#!/bin/bash
+shopt -s extglob
+rm -fr !(0|constant|dynamicCode|*log|system|clean)

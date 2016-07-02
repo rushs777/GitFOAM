@@ -1,0 +1,83 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  1.5                                   |
+|   \\  /    A nd           | Web:      http://www.OpenFOAM.org               |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     3.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSolution;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+actuatorDisk
+{
+	startPoint (4.9 0.5 0.5);
+	endPoint (5.1 0.5 0.5);
+	thrust 5;
+	torque 0.5;
+	density 1.2;
+	interiorRadius 0.05;
+	exteriorRadius 0.2;
+}
+
+solvers
+{
+    p PCG
+    {
+        preconditioner   DIC;
+        tolerance        1e-06;
+        relTol           0.01;
+    };
+    U PBiCG
+    {
+        preconditioner   DILU;
+        tolerance        1e-05;
+        relTol           0.1;
+    };
+    k PBiCG
+    {
+        preconditioner   DILU;
+        tolerance        1e-05;
+        relTol           0.1;
+    };
+    epsilon PBiCG
+    {
+        preconditioner   DILU;
+        tolerance        1e-05;
+        relTol           0.1;
+    };
+    R PBiCG
+    {
+        preconditioner   DILU;
+        tolerance        1e-05;
+        relTol           0.1;
+    };
+    nuTilda PBiCG
+    {
+        preconditioner   DILU;
+        tolerance        1e-05;
+        relTol           0.1;
+    };
+}
+
+SIMPLE
+{
+    nNonOrthogonalCorrectors 0;
+}
+
+relaxationFactors
+{
+    p               0.3;
+    U               0.7;
+    k               0.7;
+    epsilon         0.7;
+    R               0.7;
+    nuTilda         0.7;
+}
+
+// ************************************************************************* //

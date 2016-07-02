@@ -1,0 +1,112 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v3.0+                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : v3.0+-e941ee6c15e9
+Exec   : simpleFoam
+Date   : Jul 01 2016
+Time   : 10:35:45
+Host   : "RushLinuxHome"
+PID    : 22901
+Case   : /home/simon/OpenFOAM/simon-v3.0+/run/GitFOAM/ErikCode/fan
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+// using new solver syntax:
+p
+{
+    solver          PCG;
+    preconditioner  DIC;
+    tolerance       1e-06;
+    relTol          0.01;
+}
+
+// using new solver syntax:
+U
+{
+    solver          PBiCG;
+    preconditioner  DILU;
+    tolerance       1e-05;
+    relTol          0.1;
+}
+
+// using new solver syntax:
+k
+{
+    solver          PBiCG;
+    preconditioner  DILU;
+    tolerance       1e-05;
+    relTol          0.1;
+}
+
+// using new solver syntax:
+epsilon
+{
+    solver          PBiCG;
+    preconditioner  DILU;
+    tolerance       1e-05;
+    relTol          0.1;
+}
+
+// using new solver syntax:
+R
+{
+    solver          PBiCG;
+    preconditioner  DILU;
+    tolerance       1e-05;
+    relTol          0.1;
+}
+
+// using new solver syntax:
+nuTilda
+{
+    solver          PBiCG;
+    preconditioner  DILU;
+    tolerance       1e-05;
+    relTol          0.1;
+}
+
+
+SIMPLE: no convergence criteria found. Calculations will run for 200 steps.
+
+Reading field p
+
+
+
+--> FOAM FATAL ERROR: 
+
+    request for surfaceScalarField phi from objectRegistry region0 failed
+    available objects of type surfaceScalarField are
+0()
+
+    From function const Type& Foam::objectRegistry::lookupObject(const Foam::word&) const [with Type = Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh>]
+    in file /home/simon/OpenFOAM/OpenFOAM-v3.0+/src/OpenFOAM/lnInclude/objectRegistryTemplates.C at line 193.
+
+FOAM aborting
+
+#0  Foam::error::printStack(Foam::Ostream&) at ??:?
+#1  Foam::error::abort() at ??:?
+#2  Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh> const& Foam::objectRegistry::lookupObject<Foam::GeometricField<double, Foam::fvsPatchField, Foam::surfaceMesh> >(Foam::word const&) const at ??:?
+#3  Foam::fanFvPatchField<double>::calcFanJump() at ??:?
+#4  Foam::fanFvPatchField<double>::updateCoeffs() at ??:?
+#5  Foam::coupledFvPatchField<double>::evaluate(Foam::UPstream::commsTypes) at ??:?
+#6  Foam::fanFvPatchField<double>::fanFvPatchField(Foam::fvPatch const&, Foam::DimensionedField<double, Foam::volMesh> const&, Foam::dictionary const&) at ??:?
+#7  Foam::fvPatchField<double>::adddictionaryConstructorToTable<Foam::fanFvPatchField<double> >::New(Foam::fvPatch const&, Foam::DimensionedField<double, Foam::volMesh> const&, Foam::dictionary const&) at ??:?
+#8  Foam::fvPatchField<double>::New(Foam::fvPatch const&, Foam::DimensionedField<double, Foam::volMesh> const&, Foam::dictionary const&) at ??:?
+#9  Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh>::GeometricBoundaryField::readField(Foam::DimensionedField<double, Foam::volMesh> const&, Foam::dictionary const&) at ??:?
+#10  Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh>::readFields(Foam::dictionary const&) at ??:?
+#11  Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh>::readFields() at ??:?
+#12  Foam::GeometricField<double, Foam::fvPatchField, Foam::volMesh>::GeometricField(Foam::IOobject const&, Foam::fvMesh const&, bool) at ??:?
+#13  ? at ??:?
+#14  __libc_start_main in "/lib/x86_64-linux-gnu/libc.so.6"
+#15  ? at ??:?
