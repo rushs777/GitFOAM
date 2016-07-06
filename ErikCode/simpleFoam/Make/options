@@ -1,18 +1,18 @@
 EXE_INC = \
-    -I$(LIB_SRC)/TurbulenceModels/turbulenceModels/lnInclude \
-    -I$(LIB_SRC)/TurbulenceModels/incompressible/lnInclude \
-    -I$(LIB_SRC)/transportModels \
-    -I$(LIB_SRC)/transportModels/incompressible/singlePhaseTransportModel \
-    -I$(LIB_SRC)/finiteVolume/lnInclude \
-    -I$(LIB_SRC)/meshTools/lnInclude \
+1    -I$(LIB_SRC)/TurbulenceModels/turbulenceModels/lnInclude \
+1    -I$(LIB_SRC)/TurbulenceModels/incompressible/lnInclude \
+1    -I$(LIB_SRC)/transportModels \
+1    -I$(LIB_SRC)/transportModels/incompressible/singlePhaseTransportModel \
+1    -I$(LIB_SRC)/finiteVolume/lnInclude \
+1    -I$(LIB_SRC)/meshTools/lnInclude \         
     -I$(LIB_SRC)/sampling/lnInclude
 
 
 EXE_LIBS = \
     -lturbulenceModels \
-    -lincompressibleTurbulenceModels \
-    -lincompressibleTransportModels \
-    -lfiniteVolume \
-    -lmeshTools \
+1    -lincompressibleTurbulenceModels \
+1    -lincompressibleTransportModels \
+1    -lfiniteVolume \
+1    -lmeshTools \
     -lfvOptions \
     -lsampling

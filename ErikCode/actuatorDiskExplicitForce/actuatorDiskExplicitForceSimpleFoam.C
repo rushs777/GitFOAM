@@ -66,7 +66,7 @@ Description
 #include "turbulentTransportModel.H"
 #include "simpleControl.H"
 #include "fvOptions.H"
-#include "actuatorDiskExplicitForce.h"
+#include "actuatorDiskExplicitForce.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 

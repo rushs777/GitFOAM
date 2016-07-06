@@ -1,3 +1,4 @@
 actuatorDiskExplicitForceSimpleFoam.C
+actuatorDiskExplicitForce.cpp
 
 EXE = $(FOAM_USER_APPBIN)/actuatorDiskExplicitForceSimpleFoam

@@ -37,11 +37,11 @@ Description
 # ifndef ACTUATORDISKEXPLICITFORCE_H_
 # define ACTUATORDISKEXPLICITFORCE_H_
 
-# include " fvCFD .H"
+# include "fvCFD.H"
 
 namespace Foam {
 
-class actuatorDiskExplicitForce {
+class actuatorDiskExplicitForce{
 
 public:
 
@@ -49,7 +49,7 @@ public:
 	TypeName (" actuatorDiskExplicitForce ");
 
 	actuatorDiskExplicitForce();
-	actuatorDiskExplicitForce();
+	~actuatorDiskExplicitForce();
 
 	void ReadGeometry(const fvMesh &iMesh);
 	void CalcActuatorDiskVolForce(const fvMesh &iMesh, vectorField &ioVolumeForce);
@@ -68,20 +68,10 @@ private:
 	bool PointIsInDisk(const vector &iPointStartCenterLine, const vector &iPointEndCenterLine, const vector &iPoint, scalar &oDist2, vector &oLineTangent, vector &oCircumferentialDirection);
 	bool PointIsInHub(const vector &iPointStartCenterLine, const vector &iPointEndCenterLine, const vector &iPoint);
 
-	scalar CalcAxialForce(const scalar & iRadialDist , const scalar & iRho ) ;
-72 scalar CalcCircForce ( const scalar & iRadialDist , const scalar & iRho );
-73 scalar CalcDiskThickness () { return mag ( mPointEndCenterLine - mPointStartCenterLine ) ;};
-74 };
-75
-76 }// end namespace Foam
-77 # endif /* ACTUATORDISKEXPLICITFORCE_H_ */
-********************************
+	scalar CalcAxialForce(const scalar & iRadialDist, const scalar &iRho);
+	scalar CalcCircForce(const scalar &iRadialDist, const scalar &iRho);
+	scalar CalcDiskThickness() {return mag(mPointEndCenterLine - mPointStartCenterLine);};
+};
 
-
-
-
-
-
-
-
-
+}// end namespace Foam
+# endif /* ACTUATORDISKEXPLICITFORCE_H_ */

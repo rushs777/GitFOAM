@@ -50,7 +50,7 @@ Description
 #include "actuatorDiskExplicitForce.h"
 
 #include "faceAreaPairGAMGAgglomeration.H"
-#include "fvMesh .H"
+#include "fvMesh.H"
 #include "surfaceFields.H"
 #include "addToRunTimeSelectionTable.H"
 
@@ -280,7 +280,7 @@ void actuatorDiskExplicitForce::WriteVTK() {
 }
 
 
-actuatorDiskExplicitForce::PointIsInDisk(const vector &iPointStartCenterLine, const vector &iPointEndCenterLine, const vector &iPoint, scalar &oDist2, vector &oLineTangent, vector &oCircumferentialDirection) {
+bool actuatorDiskExplicitForce::PointIsInDisk(const vector &iPointStartCenterLine, const vector &iPointEndCenterLine, const vector &iPoint, scalar &oDist2, vector &oLineTangent, vector &oCircumferentialDirection) {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Check if a given point is located in the actuator disk region .
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -382,17 +382,15 @@ scalar actuatorDiskExplicitForce::CalcCircForce(const scalar &iRadialDist, const
 	scalar tangentialForce = 0.0;
 	scalar radiusScaled = (iRadialDist/mExtRadius - mIntRadius/mExtRadius)/(1.0 - mIntRadius/mExtRadius);
 	scalar At = (105.0/8.0)*mTorque/(CalcDiskThickness()*mPI*mExtRadius*(mExtRadius - mIntRadius)*(3.0*mExtRadius + 4.0*mIntRadius));
-	tangentialForce = (At*radiusScaled * sqrt (1.0 - radiusScaled ) /( radiusScaled *(1.0 -
-mIntRadius / mExtRadius ) + mIntRadius / mExtRadius ) );
-386 //
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-387
-388 if( debug >= 2) {
-389 Info << " Tangential force : " << tangentialForce << "\n";
-390 }
-391
-392 return tangentialForce ;
-393 }
-394
-395
-396 } // end namespace Foam
+	tangentialForce = (At*radiusScaled*sqrt(1.0 - radiusScaled )/(radiusScaled*(1.0 - mIntRadius/mExtRadius) + mIntRadius/mExtRadius));
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	if(debug >= 2) {
+		Info << "Tangential force: " << tangentialForce << "\n";
+	}
+
+	return tangentialForce;
+}
+
+
+} // end namespace Foam
