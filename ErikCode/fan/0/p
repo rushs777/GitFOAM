@@ -30,6 +30,7 @@ boundaryField
         rho             none;
         psi             none;
         gamma           1;
+//        value           uniform 0; //Added by SAR 7/6
     }
     outlet
     {
